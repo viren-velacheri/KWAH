@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <!-- load jquery -->
+    <!-- A heroku deployment sets up the web as https://
+         chrome then complains that this http src request is insecure,
+         so need an https version for jquery cdn
+         got from developers.google.com
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    -->
+
+    <!-- start with 1.x version , then try 2.x version of jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    -->
+
+    <!-- load bootstrap -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+    <title>Koko wants a home</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1 id="main_msg">Koko wants a home</h1>
+      <a href="/">Back to Home</a>
+      <p>Error page:</p>
+      <p>{{message}}</p>
+    </div>
+  </body>
+</html>

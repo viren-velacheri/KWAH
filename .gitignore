@@ -1,0 +1,7 @@
+node_modules
+*~
+#*#
+public/images/full
+public/images/thumbs/small
+*.pyc
+npm-debug.log

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="stylesheets/favicon.ico">
+
+    <title>Sign in: KWaH</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="bootstrap-social/bootstrap-social.css">
+
+    <style>
+      html, body, .container {
+        height: 100%;
+      }
+
+      .container {
+        display: table;
+        vertical-align: middle;
+      }
+      .vertical-center-row {
+        display: table-cell;
+        vertical-align: middle;
+      }
+      </style>
+
+    </head>
+
+  <body>
+    <div class="navbas navbar-inverse navbar-fixed-top">
+      <div class ="container">
+        <div class="navbar-header" >
+          <ul class="nav nav-pills">
+            <li><a href="/">Home</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row vertical-center-row">
+        <div class="col-lg-4 col-lg-offset-4">
+
+          {% if messages.errors %}
+            <div class="alert alert-danger fade in">
+              <button type="button" data-dismiss="alert" class="close"><span class="ion-close-circled"></span></button>
+              {% for error in messages.errors %}
+              <div>{{error.msg}}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          <form class="form-signin">
+            <h2 class="form-signin-heading">Koko Wants a Home</h2>
+              <a href="/auth/facebook" class="btn btn-block btn-lg btn-social btn-facebook">
+                <i class="fa fa-facebook"></i> Sign in with Facebook
+              </a>
+              <a href="/auth/Google" class="btn btn-block btn-lg btn-social btn-google">
+                <i class="fa fa-google"></i> Sign in with Google
+              </a>
+          </form>
+        </div>
+      </div>
+    </div> <!-- /container -->
+
+    <!-- load jquery -->
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  </body>
+</html>

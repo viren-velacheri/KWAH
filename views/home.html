@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="stylesheets/favicon.ico">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+  <style>
+
+    /*
+    body {
+      background-image: url('/images/pup.jpg');
+    }
+    */
+
+    .jumbotron {
+      background-image: url('/images/sample.jpg');
+    }
+
+    /* offset start of panel-display from fixed navbar */
+    body { padding-top: 25px; }
+    .pad-bookmark { padding-top: 25px; }
+
+    /* {
+       font-size: 16px;
+       line-height: 1.428;
+    }*/
+
+  </style>
+
+  <title>Koko wants a Home</title>
+
+</head>
+
+<body>
+  <div class="navbas navbar-inverse navbar-fixed-top">
+    <div class ="container">
+      <div class="navbar-header" >
+        <ul class="nav nav-pills">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <a name="home"></a>
+    <div class="jumbotron">
+      <h1>Koko Wants a Home</h1>
+     <!--  <p>This is a template for a simple marketing or informational website.</p> -->
+      <p><a class="btn btn-primary btn-lg" href="/browse/?filter=1" role="button">Search for Dogs &raquo;</a></p>
+      <h5>Austin Animal Center</h5>
+    </div>
+  </div>
+
+  <div class="container">
+    <a name="about"></a>
+
+    <div class="row">
+
+      <div class="col-md-6">
+        <div class="page-header">
+          <h2>About</h2>
+        </div>
+        <img src="/images/pup.jpg" class="img-responsive" width="560" height="540">
+      </div>
+
+      <div class="col-md-6">
+        <div class="page-header">
+          <h2>&nbsp</h2>
+        </div>
+        <p>
+          A dog makes your house a home !
+          Koko wants a home is a simple website that makes adopting a dog from the Austin Animal Center, easier and faster.
+          We got this idea when we were adopting our dog Koko. It was difficult to search for dogs on the Austin Animal Center website.
+          It had very primitive search capabilities. It was hard to keep track of which dogs we had already seen, which were the new dogs
+          ,without browsing through the entire list.
+          <br><br>
+          Other websites listed so many dogs, it was overwhelming. Also, many were from rescue groups which were difficult to get in touch with
+          to actually see the dogs. At one point we were so tired we were thinking about buying a dog from a breeder.
+          It took us about 3 months to find our puppy. We got him by sheer luck as our neighbor who volunteers at the shelter spotted Koko
+          and felt he might be the perfect dog for us.
+          <br><br>
+          After seeing our parents struggle and getting frustrated during the adoption process my brother created Koko wants a Home.
+          Some of Koko wants a Home’s features are: you sign in with your Google or facebook account so you’re able to save your searches and
+          you can also create a list of favorites. This is a major time saver because most shelter’s websites don’t let you save your searches.
+          <br><br>
+          Here is an example: Let's say I am looking for a poodle on Austin Animal Center’s website,
+          I find a couple of cuties that I add to my favorites list. I also save off my search. I head over to the shelter, to look at
+          each dog. Like a shopping list you can cross off dogs that aren't a good fit. If you didn't find the dog you were looking for, no
+          worries. Since you have saved your "poodle" search, when a new dog matching your search criteria arrives, you will automatically
+          be notified by email.
+          <br><br>
+          We hope this website is a small step in making the adoption process just a little bit more streamlined and efficient, resulting in
+          many more Kokos finding a home!
+        </p>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <a name="contact"></a>
+      <div class="col-md-12">
+        <div class="page-header">
+          <h2>Contact</h2>
+        </div>
+
+        <p class="lead">
+            Send us your comments, feedback, suggestions.
+        </p>
+
+        {% if messages.errors %}
+          <div class="alert alert-danger fade in">
+            <button type="button" data-dismiss="alert" class="close"><span class="ion-close-circled"></span></button>
+            {% for error in messages.errors %}
+            <div>{{error.msg}}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        {% if messages.success %}
+          <div class="alert alert-success fade in">
+            <button type="button" data-dismiss="alert" class="close"><span class="ion-close-circled"></span></button>
+            {% for success in messages.success %}
+            <div>{{success.msg}}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <form role="form" method="POST" action="/postContact" class="form-horizontal">
+          <input type="hidden" name="_csrf"/>
+          <div class="form-group">
+            <label for="name" class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-8">
+              <input type="text" name="name" id="name" class="form-control"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email" class="col-sm-2 control-label">Email</label>
+            <div class="col-sm-8">
+              <input type="text" name="email" id="email" class="form-control"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="message" class="col-sm-2 control-label">Body</label>
+            <div class="col-sm-8">
+              <textarea type="text" name="message" id="message" rows="7" class="form-control">
+              </textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-8">
+              <button type="submit" class="btn btn-primary"><i class="fa fa-envelope"></i>Send</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="row">
+      <a name="faq"></a>
+      <div class="col-md-12">
+        <div class="page-header">
+          <h2>FAQ</h2>
+        </div>
+
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+              <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  What are some tips for searching ?
+                </a>
+              </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+              <div class="panel-body">
+                <h4><a name="Q1"></a></h4>
+                <p>Type what you want into the search text window. There aren't a million radio buttons, drop-downs.
+                  You can type in breed, size (small, medium, large), age, or the specific ID of the dog. You can combine multiple criteria
+                  together. Here are a few examples:
+                  <ul>
+                    <li> Search for all dogs. <code> Leave search field blank </code> </li>
+                    <li>Search for puppy/pup (less than 1 year old), type: <code> puppy </code>
+                    <li>terrier pup, type: <code> terrier pup </code>
+                    <li>Small dog less than 2 years old, type: <code>small 2 yrs</code></li>
+                    <li>Male poodle, type: <code>male poodle</code></li>
+                    <li>Any dog less than 5 years old, type: <code>5 years</code></li>
+                    <li>labradors that are  more than 1 year old, type:<code> labrador > 1 year</code></li>
+                    <li> Search for a maltese poodle (maltipoo) <code> maltese poodle </code> </li>
+                  </ul>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingTwo">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  Why do your require a login to browse ?
+                </a>
+              </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+              <div class="panel-body">
+                <p>To get the most out of the website we need to uniquely save each person's searches and favorites list, along with knowing
+                 how to notify them. We are assuming you are seriously considering adopting and the goal is to make it easier for you to
+                 find the dog of your choice.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingThree">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  What's with the facebook/google login ?
+                </a>
+              </h4>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+              <div class="panel-body">
+                <p>Rather than having to create yet another account password combination for you to forget, we use authentication services
+                  provided by facebook and google. These services use the latest secure OAuth-2 protocol. BTW, the first time you login facebook/google
+                  will inform you that kokowantsahome would like your email address. If you decline to do so, you will not be able to proceed.
+                  Your email is used for no other purpose other than for notification emails (not sold to telemarketers etc, if you haven't noticed
+                  there are no ads on this website)
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="h4">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#c4" aria-expanded="false" aria-controls="c4">
+                  What information can you access from my facebook/google account ?
+                </a>
+              </h4>
+            </div>
+            <div id="c4" class="panel-collapse collapse" role="tabpanel" aria-labelledby="h4">
+              <div class="panel-body">
+                <p>Just your name and email address. We have no access to your posts, settings, friends etc.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="h5">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#c5" aria-expanded="false" aria-controls="c5">
+                  What if I don't have either a facebook or google account ?
+                </a>
+              </h4>
+            </div>
+            <div id="c5" class="panel-collapse collapse" role="tabpanel" aria-labelledby="h5">
+              <div class="panel-body">
+                <p>If you are still hiding under a rock, (and there are enough people like you) we may set up a way to register and create accounts
+                on this site. Please <a href="#contact">contact</a> us.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="h6">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#c6" aria-expanded="false" aria-controls="c6">
+                  I no longer wish to receive notification emails, what do I do ?
+                </a>
+              </h4>
+            </div>
+            <div id="c6" class="panel-collapse collapse" role="tabpanel" aria-labelledby="h6">
+              <div class="panel-body">
+                <p>In the browse page, click the accounts button and choose unsubscribe.
+                  Once you confirm the dialog, you will be removed from our user database.
+                  You can always come back, at that point you would be like a new user.
+                  We maintain no history of past users.
+                </p>
+               </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="h7">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#c7" aria-expanded="false" aria-controls="c7">
+                  Why are the notification emails, from this weird "postmaster ..." ?
+                </a>
+              </h4>
+            </div>
+            <div id="c7" class="panel-collapse collapse" role="tabpanel" aria-labelledby="h7">
+              <div class="panel-body">
+                <p>Did I mention I developed this website on my own without $$s. The email service used is mailgun.
+                  That's the free account, up to 10,000 emails per day in action.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="h8">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#c8" aria-expanded="false" aria-controls="c8">
+                  Why doesn't this website load blazing fast ?
+                </a>
+              </h4>
+            </div>
+            <div id="c8" class="panel-collapse collapse" role="tabpanel" aria-labelledby="h8">
+              <div class="panel-body">
+                <p>Running this with my own $$s, on a flexible cloud service. Don't want to waste $$s on unused capacity.
+                  That being said, please let me know if it is slow to the point of being unusuable. I can fork out my hard earned cash
+                  for additional webservers in the cloud (it's all very seamless, as long as you have a credit card !)
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="h9">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#c9" aria-expanded="false" aria-controls="c9">
+                  What is the function of the
+                    <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+                  and
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                  icon on each dog's panel display ?
+                </a>
+              </h4>
+            </div>
+            <div id="c9" class="panel-collapse collapse" role="tabpanel" aria-labelledby="h9">
+              <div class="panel-body">
+                <p>Clicking on the
+                  <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+                  icon, adds the dog to your favorites list. Clicking the
+                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                   icon removes the dog from your list.
+                  To not display dogs that have
+                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                  selected, check the display filter option.
+                  A simple way to use this feature, is to browse the list of dogs and click on the
+                  <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+                   icon for any that you like.
+                  Then at the shelter, you can view your favorites list and cross out the dogs that are not suitable by clicking the
+                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                   icon.
+                </p>
+             </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="h10">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#c10" aria-expanded="false" aria-controls="c10">
+                  Which shelters are the animals listed from ?
+                </a>
+              </h4>
+            </div>
+            <div id="c10" class="panel-collapse collapse" role="tabpanel" aria-labelledby="h10">
+              <div class="panel-body">
+                <p>Austin Animal Center.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="h11">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#c11" aria-expanded="false" aria-controls="c11">
+                  Why aren't other rescue organizations included ?
+                </a>
+              </h4>
+            </div>
+            <div id="c11" class="panel-collapse collapse" role="tabpanel" aria-labelledby="h11">
+              <div class="panel-body">
+                <p>While there are many pet rescue organizations doing great work, they often don't have a streamlined process to see the animals.
+                The animals are usually fostered in different locations, which can result in a frustrating experience trying to adopt a pet.
+                Some "rescue" organizations have fees that make you wonder if they are really breeders in disguise. That being said, if you feel
+                strongly about any organization, please <a href="#contact">contact</a> us.
+                </p>
+               </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="h12">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#c12" aria-expanded="false" aria-controls="c12">
+                  Why have this website, when we can browse the center's website directly
+                </a>
+              </h4>
+            </div>
+            <div id="c12" class="panel-collapse collapse" role="tabpanel" aria-labelledby="h12">
+              <div class="panel-body">
+                <p>You certainly can, but the Austin Animal Center website is seriously challenged, when it comes to executing intelligent searches
+                based on breed, age etc. Also in an era of smartphones, their website is next to impossible to even browse for pets on your smartphone.
+                The real power of koko-wants-a-home is the ability to save a search and then have an email notification sent to you when a dog matching
+                your criteria arrives at the shelter. Koko-wants-a-home is also designed to be smartphone friendly.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="h13">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#c13" aria-expanded="false" aria-controls="c13">
+                  What about other websites like petfinder.com ?
+                </a>
+              </h4>
+            </div>
+            <div id="c13" class="panel-collapse collapse" role="tabpanel" aria-labelledby="h13">
+              <div class="panel-body">
+                <p>The biggest issue with these sites, is the information overload, since they pretty much accept adoption listings from any organization.
+                  Imagine searching for a particular breed and being shown a 1000 results! Based on our own experience, it was frustrating spending
+                  several days trying to get in touch with someone to see a dog we liked, only to be told the dog was unavailable.
+                  They aren't as bad to navigate on a smartphone as the Austin Animal Center's own website (but trust me, that's a low bar).
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="14">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#c14" aria-expanded="false" aria-controls="c14">
+                  What is the adoption procedure ?
+                </a>
+              </h4>
+            </div>
+            <div id="c14" class="panel-collapse collapse" role="tabpanel" aria-labelledby="h14">
+              <div class="panel-body">
+                <p>In general, you will be expected to meet with an adoption counselor and register. That way as soon as you find a dog that
+                  you are interested in, you call the shelter and they put you on the list of people wanting to adopt that dog. I think you
+                  have 24 hours to meet the dog, before they call the next person on the list. For updated information pleae check with the shelter.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="h15">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#c15" aria-expanded="false" aria-controls="c15">
+                  What kind of dog should I adopt ?
+                </a>
+              </h4>
+            </div>
+            <div id="c15" class="panel-collapse collapse" role="tabpanel" aria-labelledby="h15">
+              <div class="panel-body">
+                <p>There are a lot of websites with useful info, the adoption counselor can also guide you.
+                  The biggest consideration is probably size. If you have an apartment, a big dog can be challenging.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="h16">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#c16" aria-expanded="false" aria-controls="c16">
+                  What is the financial commitment ?
+                </a>
+              </h4>
+            </div>
+            <div id="c16" class="panel-collapse collapse" role="tabpanel" aria-labelledby="h16">
+              <div class="panel-body">
+                <p>I believe it is the law in Texas for all shelter animals to be spayed/neutered. So that should already have been done.
+                  The adoption fee at the Austin Animal shelter is $75 (check the shelter website for the up to date info).
+                  You have to budget for regular vetinerary care. Annual vaccines and checkup, shouldn't exceed $100.
+                  There are different types of pet insurance offered, but be aware that almost all have a deductible.
+                  A reasonably priced plan will not cover routine visits to the vet. (meant for accidents, surgeries etc)
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="h17">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#c17" aria-expanded="false" aria-controls="c17">
+                  What about traveling with my dog ?
+                </a>
+              </h4>
+            </div>
+            <div id="c17" class="panel-collapse collapse" role="tabpanel" aria-labelledby="h17">
+              <div class="panel-body">
+                <p>Many hotels are pet friendly for an added fee. Some charge on a per night basis (+$10 to $30), others have a flat rate.
+                  check out <a href="http://www.bringfido.com">bringfido</a> for pet friendly accomodation. Within the US, small dogs can fly with you in the
+                  cabin for $125 each way (Southwest is slightly less). Your dog will need a doctors wellness certificate along with proof of
+                  having been vaccinated against rabies. International travel for vacations will generally be out of the question, since most
+                  countries have quarantine requirements. The one exception is travel to Canada, which has similar requirements to a domestic flight.
+                  Canada is also very pet friendly. Koko has vacationed in Banff and Victoria (Vancouver Island).
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="h18">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#c18" aria-expanded="false" aria-controls="c18">
+                  Which dog breeds are hard to come by ?
+                </a>
+              </h4>
+            </div>
+            <div id="c18" class="panel-collapse collapse" role="tabpanel" aria-labelledby="h18">
+              <div class="panel-body">
+                <p>Small dogs like maltese, minature poodles, yorkies etc, hypoallergenic dogs (that don't shed hair) will often be adopted very quickly.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="h19">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#c19" aria-expanded="false" aria-controls="c19">
+                  Why aren't there cats or other pets ?
+                </a>
+              </h4>
+            </div>
+            <div id="c19" class="panel-collapse collapse" role="tabpanel" aria-labelledby="h19">
+              <div class="panel-body">
+                <p>This is the initial rollout, if there are enough people who think this would be useful for cats or other pets, we can add them too.
+                  Please <a href="#contact">contact</a> us.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <footer>
+      <p>&copy; KWAH,Viren Velacheri 2015</p>
+    </footer>
+  </div> <!-- /container -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+</body>
+</html>

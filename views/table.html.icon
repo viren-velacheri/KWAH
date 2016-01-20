@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <!-- For responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- load jquery 
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    -->  
+
+    <!-- start with 1.x version , then try 2.x version of jquery     -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    -->
+
+    <!-- load bootstrap -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+    <style>
+      /* offset start of panel-display from fixed navbar */
+      body { padding-top: 75px; }
+
+      /* make panels fixed height */
+      .fixed-panel {
+         min-height: 420px;
+         max-height: 420px;
+         overflow-y: scroll;
+      }
+    </style>
+
+    <title>Koko wants a home</title>
+
+  </head>
+
+  <body>
+
+    <nav role="navigation" class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+
+	  <form class="navbar-form navbar-left" id="main">
+
+	    <div class="input-group">
+
+	      <input id="search" type="text" class="form-control" placeholder="{{search_term}}" >
+	      <span class="input-group-btn">
+	      <a href="#"  id="go_btn" class="btn btn-default" type="button">
+		<span class="glyphicon glyphicon-search"></span>
+	      </a>
+	    
+	      <a href="#"  id="save_btn" class="btn btn-default" type="button">
+		<span class="glyphicon glyphicon-save"></span>
+	      </a>
+	    
+	      <a href="#"  id="delete_btn" class="btn btn-default" type="button">
+		<span class="glyphicon glyphicon-remove-circle"></span>
+	      </a>
+
+
+	      <!-- Single button -->
+	      <div class="btn-group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" 
+			aria-haspopup="true" aria-expanded="false">
+		  <span class="glyphicon glyphicon-th-list"></span>
+		  <span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu">
+		  <li>
+                  {% if list == 1 %}
+		    <a href="#" id='mylist' check="yes" >My List</a>
+                  {% else %}
+		    <a href="#" id='mylist' check="no" >My List</a>
+                  {% endif %}
+		  </li>
+		 {% if saved_search_valid %}	    
+		  {% for saved_search in saved_searches %}
+		  <li>
+		    <a href="#" id='{{saved_search}}' class="saved-search-btn" >{{saved_search}}</a>
+		  </li>
+		   {% endfor %}
+                 {% endif %}
+		</ul>
+	      </div>
+
+	    <a id="refresh-view" class="btn btn-default" href="#" type="button">
+	      <span class="glyphicon glyphicon-refresh"></span>		  
+	    </a>
+	    
+	    {% if filter == 1 %}
+	    <a href="#" id="filter-pref" check="yes" class="btn btn-default ">
+	      <span class="glyphicon glyphicon-check"></span>
+	    </a>
+	    {% else %}
+	    <a href="#" id="filter-pref" check="no" class="btn btn-default ">
+	      <span class="glyphicon glyphicon-unchecked"></span>
+	    </a>
+	    {% endif %}
+
+	    <!-- <a class="btn btn-default" href='/logout'>{{username}}: -->
+	    <a class="btn btn-default" href='/logout'>
+	      <span class="glyphicon glyphicon-log-out"></span>
+	    </a>
+
+	      </span>
+	    </div>
+	    
+	  </form>
+
+	  <!--
+          <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+	  -->
+
+        </div><!-- navbar-header -->
+
+        <!-- Collection of nav links and other content for toggling -->
+        <div id="navbarCollapse" class="collapse navbar-collapse">
+	  <form class="navbar-form navbar-right">
+
+	    
+	  </form>
+	  
+        </div><!-- navbarCollapse -->
+      </div><!-- container -->
+    </nav><!-- navigation -->
+
+    <div class="container">
+
+      <div class="row">
+        {% set num_pets_displayed = -1 %}
+
+	{% if result_valid %}
+
+        {% set num_pets_displayed = 0 %}
+
+	{% for pet in pets %}
+
+        {% if pet.display %}
+         {% set num_pets_displayed += 1 %}
+
+        <div class="col-md-4 col-xs-12">
+	  
+	  <div class="panel panel-default">
+	    <div class="panel-heading">
+
+	      {% if pet.today %}
+	      <h3 class="panel-title">{{pet.id}}: {{pet.name}}
+		<span class="label label-info">Added Today!</span>
+	      </h3>
+	      {% else %}
+	      <h3 class="panel-title">{{pet.id}}: {{pet.name}}</h3>
+	      {% endif %}
+
+	    </div>
+	    <div class="panel-body fixed-panel">
+	      {% set img_file = pet['images'][0]['path'] %}
+	      {% set img_file_name = img_file.split('/')[1] %}
+	      {% set img_path = '/images/thumbs/big/' + img_file_name %}
+	      <a value="{{pet.id}}" data-toggle="modal" data-target="#DetailModal">
+		<img src={{img_path}} >
+	      </a>
+	      <p>{{pet.breed}}</p>
+	      <p>{{pet.gender_detail}}</p>
+	      <p>{{pet.ageyears}} years</p>
+	      <p>{{pet.date_string}}</p>
+	      <p>{{pet.location}}</p>
+	      <div class="btn-toolbar" role="toolbar" aria-label="...">
+		<div class="btn-group" role="group" aria-label="...">
+		  {% if pet.adopted %}
+		  <button  type="button" class="btn btn-success btn-sm">
+		    ADOPTED
+		  </button>
+
+		  {% else %}
+		  
+	          {% if pet.yes %}
+		  <button choose="yes" value="{{pet.id}}" type="button" class="btn btn-success btn-sm">
+		    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+		  </button>
+		  {% else %}
+		  <button choose="yes" value="{{pet.id}}" type="button" class="btn btn-default btn-sm">
+		    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+		  </button>
+		  {% endif %}
+		  
+		  {% if pet.no %}
+   		  <button choose="no" value="{{pet.id}}" type="button" class="btn btn-danger btn-sm">
+		    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+		  </button>
+                  {% else %}
+   		  <button choose="no" value="{{pet.id}}" type="button" class="btn btn-default btn-sm">
+		    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+		  </button>
+		  {% endif %}
+		  
+		  {% endif %}
+		  
+		</div><!--btn group -->
+	      </div><!--btn toolbar -->
+
+	    </div><!-- panel body -->
+	  </div><!-- panel -->
+	</div><!-- col-**-** -->
+
+	{% endif %}
+	{% endfor %}
+	{% else %}
+        <div class="col-md-12 col-xs-12">
+	  <div class="alert alert-danger" role="alert">Search returned no results</div>
+	</div>
+	{% endif %}
+
+	{% if num_pets_displayed == 0 %}
+        <div class="col-md-12 col-xs-12">
+ 	  <div class="alert alert-info" role="alert">Nothing to display based on preferences</div>
+	</div>
+        {% endif %}
+
+      </div><!-- row -->
+
+      <!-- Modal -->
+      <div class="modal fade" id="DetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-md">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title">Details</h4>
+            </div>
+            <div class="modal-body"></div>
+          </div>
+          <!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+
+    <script type="text/javascript">
+      $( function() {
+          
+          var filter_pref = 0 ;
+
+           //For android go button   
+           //$("form#main").submit(function() {
+             //  $('#go_btn').click();
+               //return false ;
+             //});
+           //});
+
+          //Process search when return key is pressed
+          $('#search').keypress(function (e) {
+                if (e.which == 13) {
+                   $('#go_btn').click();
+                   //$('form#main').submit();
+                    return false;    //<---- Must add this line to stop event propagation
+		}
+            });
+
+          var getFilterSetting = function() {
+             //if ( $('#filter-pref').prop("check") )
+             if ( $('#filter-pref').attr("check") == 'yes' )
+               filter_pref = 1;
+          };
+
+          var getListState = function() {
+            return $('#mylist').attr('check');
+          };
+
+          $('#filter-pref').click( function() {
+             if ( $(this).attr('check') == 'yes')
+                 $(this).attr('check','no');
+             else $(this).attr('check','yes');
+              refreshView();
+          });
+
+          $('#refresh-view').click( function() {
+              refreshView();
+          });
+
+          $('#go_btn').click( function() {
+            var search_string = $('#search').val();
+            console.log(search_string);
+            getFilterSetting();
+            var qstring = $.param({'search':search_string,'filter':filter_pref});
+            window.location = "/?" + qstring;
+          });
+
+          $('#save_btn').click( function() {
+            $(this).addClass('btn-success') ; 
+            setTimeout( function() {
+            $.ajax({
+              url:"/savesearch/?" + getQstring() ,
+              async: false,
+              dataType: "json",
+
+              success: function(json) {
+                console.log("call saveSearch: " + json.status);
+                //obj.removeClass('btn-success') ; 
+                refreshView();
+              },
+              error: function(xhr,status) {
+                alert("saveSearch failed");
+              }
+
+            }); } , 100);
+         });
+
+          $('#delete_btn').click( function() {
+            $(this).addClass('btn-danger') ; 
+            setTimeout( function() {
+            $.ajax({
+              url:"/deletesearch/?" + getQstring() ,
+              async: false,
+              dataType: "json",
+
+              success: function(json) {
+                console.log("call deleteSearch: " + json.status);
+                window.location = "/";
+              },
+              error: function(xhr,status) {
+                alert("deleteSearch failed");
+              }
+
+            }); } , 100 );
+         });
+
+        var getQstring = function() {
+            var search_string = $('#search').attr('placeholder');
+            console.log("getQstring()::search_string = " + search_string );
+            getFilterSetting();
+            var param_string = $.param({'search':search_string,'filter':filter_pref});
+            console.log("getQstring()::param_string = " + param_string );
+            return param_string ;
+        };
+
+        var refreshView = function() {
+            console.log("refreshView->getListState = " + getListState() );
+            if (getListState() == 'yes')
+              renderListView();
+            else
+             window.location = "/?" + getQstring() ;
+        };
+
+        var savePrefCall = function(pref,prefstring,obj,otherbutton) {
+            $.ajax({
+              url:"/savepref/?" + prefstring ,
+              async: false,
+              dataType: "json",
+
+              success: function(json) {
+                console.log("call savePref: " + json.status);
+                //refreshView();
+                if ( pref == 'yes' ) {
+                  obj.addClass("btn-success");
+                  otherbutton.removeClass("btn-danger");
+                }
+                if ( pref == 'no'  ) {
+                  obj.addClass("btn-danger");
+                  otherbutton.removeClass("btn-success");
+                }
+              },
+              error: function(xhr,status) {
+                alert("savepref failed");
+              }
+            });
+        };
+
+        $('a[data-toggle="modal"]').click( function() {
+          var id = $(this).attr('value') ;
+          //var url = "http://www.petharbor.com/pet.asp?uaid=ASTN." + id;
+          var url = "/getDetailsById/?" + $.param({'id':id});
+          $('.modal-body').load(url);
+        });
+
+        $('button[choose="yes"]').click( function() {
+          //$('#info').text('');
+          var id = $(this).attr('value') ;
+          
+           var otherbutton;
+           otherbutton = $('button[choose="no"][value="' + id + '"]') ;
+           console.log('otherbutton ' + otherbutton.attr('choose'));
+
+          //$('#info').text( id ) ;
+            var prefstring = $.param({'pref':'yes', 'id': id});
+            savePrefCall('yes',prefstring,$(this),otherbutton);
+        });
+
+        $('button[choose="no"]').click( function() {
+          //$('#info').text('');
+          var id = $(this).attr('value') ;
+
+           var otherbutton ;
+           otherbutton = $('button[choose="yes"][value="' + id + '"]') ;
+
+          //$('#info').text( id ) ;
+            var prefstring = $.param({'pref':'no', 'id': id});
+            savePrefCall('no',prefstring,$(this),otherbutton);
+        });
+
+        $('.saved-search-btn').click( function() {
+            var search_string = $(this).text();
+            console.log("saved-search-btn " + search_string);
+            if (search_string == "Any") search_string = "";
+            getFilterSetting();
+            var qstring = $.param({'search':search_string,'filter':filter_pref});
+            window.location = "/?" + qstring ;
+        });
+
+        var renderListView = function() {
+            $.ajax({
+              url:"/getMyList" ,
+              async: false,
+              dataType: "json",
+
+              success: function(json) {
+                getFilterSetting();
+                var qstring = $.param({'list':json['result'][0]['yes'],'filter':filter_pref});
+                window.location = "/?" + qstring ;
+              },
+
+              error: function(xhr,status) {
+                alert("getMyList failed");
+              }
+
+            });
+        }
+
+        $('#mylist').click( function() {
+            console.log("getListState = " + getListState() );
+            renderListView();
+        });
+
+      });
+    </script>
+
+  </body>
+</html>
+
+
+
