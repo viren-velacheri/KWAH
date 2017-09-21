@@ -1,5 +1,6 @@
 ## Koko-Wants-A-Home
 ### http://www.kokowantsahome.org
+#### Please note: The code posted has been stripped of all the secure authorization information required for production deployment.
 
 #### Built using:
 * *Frontend : Responsive [Bootstrap](http://getbootstrap.com) + [jQuery](https://jquery.com)*
